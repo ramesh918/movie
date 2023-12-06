@@ -16,7 +16,7 @@ const defaultRoutes = [
   {
     path: `/${version1}/movies`,
     route: lobbyRoutes,
-  },
+  }
 ];
 
 

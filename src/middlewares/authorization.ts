@@ -1,10 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 
+
+interface User {
+    // Define properties as per your user object
+    role: string;
+    id: string;
+    email: string;
+    // Add other properties if needed
+}
 interface AuthRequest extends Request {
-    user: {
-        role: string;
-        // Add other user properties if needed
-    }
+    user: User;
 }
 
 export default function authorization(
