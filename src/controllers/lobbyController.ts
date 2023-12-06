@@ -15,7 +15,7 @@ const LobbyController = {
   async getAllLobbies(req: Request, res: Response) {
     try {
       const lobbies = await LobbyModel.find();
-      res.json(lobbies);
+      res.status(200).json(lobbies);
     } catch (error) {
       res.status(500).json({ error: 'Could not fetch lobbies' });
     }
@@ -28,7 +28,7 @@ const LobbyController = {
       if (!lobby) {
         return res.status(404).json({ error: 'Lobby not found' });
       }
-      res.json(lobby);
+      res.status(200).json(lobby);
     } catch (error) {
       res.status(500).json({ error: 'Could not fetch lobby' });
     }
@@ -42,7 +42,7 @@ const LobbyController = {
       if (!lobby) {
         return res.status(404).json({ error: 'Lobby not found' });
       }
-      res.json(lobby);
+      res.status(200).json(lobby);
     } catch (error) {
       res.status(500).json({ error: 'Could not update lobby' });
     }
@@ -55,7 +55,7 @@ const LobbyController = {
       if (!lobby) {
         return res.status(404).json({ error: 'Lobby not found' });
       }
-      res.json({ message: 'Lobby deleted successfully' });
+      res.status(200).json({ message: 'Lobby deleted successfully' });
     } catch (error) {
       res.status(500).json({ error: 'Could not delete lobby' });
     }
@@ -63,9 +63,12 @@ const LobbyController = {
 
   async searchLobby(req: Request, res: Response) {
     try {
-      const { q  } = req.query;
+      const { q } = req.query;
 
-      // If both title and genre are not provided in query, return all lobbies
+      if (!q) {
+        return res.status(400).json({ error: 'Search term missing' });
+      }
+
       const movies = await LobbyModel.find({
         $or: [
           { title: { $regex: q, $options: 'i' } }, // Case-insensitive search for title
