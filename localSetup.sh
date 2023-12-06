@@ -1,6 +1,6 @@
 npm i
 cd src/seeds
-ts-node 0_createUsers.ts
+ts-node createUsers.ts
 cd ..
 cd ..
 npm run dev
